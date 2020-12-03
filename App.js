@@ -21,6 +21,7 @@ const PendingView = () => (
 );
 const App = () => {
   const [image, setImage] = useState(null);
+  const [code, setCode] = useState(null);
   const takePicture = async (camera) => {
     try {
       const options = {quality: 0.9, base64: false};
@@ -53,6 +54,13 @@ const App = () => {
             buttonPositive: 'OK',
             buttonNegative: 'Cancel',
           }}
+          onGoogleVisionBarcodesDetected={({barcodes}) => {
+            console.warn(
+              JSON.stringify(barcodes[0].type) +
+                ' : ' +
+                JSON.stringify(barcodes[0].data),
+            );
+          }}
           androidRecordAudioPermissionOptions={{
             title: 'Permission to use audio',
             message: 'longer text to user audio',
@@ -73,6 +81,7 @@ const App = () => {
           }}
         </RNCamera>
       )}
+      <Text>{code}</Text>
     </View>
   );
 };
